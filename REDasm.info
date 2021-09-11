@@ -6,6 +6,6 @@ DOWNLOAD="https://github.com/kermitdafrog/REDasm/releases/download/v3.0.0-beta5/
 MD5SUM="5e851d7de2fdf2f46d95ff6a66105ae3"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="%README%"
+REQUIRES="CMake 3.12 C++17 compiler Qt 5.11"
 MAINTAINER="kermitdafrog8"
 EMAIL="kermitdafrog8@consolehack.myftp.org"
