@@ -29,25 +29,25 @@
 
 
 
-PRGNAM=REDasm	# replace with name of program
+PRGNAM=REDasm
 VERSION=${VERSION:-3.0.0.beta7}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SBo}	# "_SBo" is required for submission to slackbuilds.org
+TAG=${TAG:-_SBo}
 
-# Automatically determine the architecture we're building on:
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) export ARCH=i586 ;;
     arm*) export ARCH=arm ;;
-    # Unless $ARCH is already set, use uname -m for all other archs:
+
        *) export ARCH=$( uname -m ) ;;
   esac
 fi
 
 CWD=$(pwd)
-TMP=${TMP:-/tmp/SBo}	# For consistency's sake, use this
+TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}	# Drop the package in /tmp
+OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -63,10 +63,7 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e # Exit on most errors
-# If you prefer to do selective error checking with
-#   command || exit 1
-# then that's also acceptable.
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -81,77 +78,38 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Your application will probably need different configure flags;
-# these are provided as an example only.
-# Be sure to build only shared libraries unless there's some need for
-# static.
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 
           mkdir build
           cd build
-          cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+          cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ..
+ 
 
-
-
-  
-# Compile the application and install it into the $PKG directory
-make -j4
+make -j10
 make install DESTDIR=$PKG
 
-# Strip binaries and libraries - this can be done with 'make install-strip'
-# in many source trees, and that's usually acceptable if so, but if not,
-# use this:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
   | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# Compress man pages
-# If man pages are installed to /usr/share/man instead, you'll need to either
-# add the --mandir=/usr/man flag to configure or move them manually after the
-# make install process is run.
-#find $PKG/usr/man -type f -exec gzip -9 {} \;
-#for i in $( find $PKG/usr/man -type l ) ; do
-#  ln -s $( readlink $i ).gz $i.gz ; rm $i
-#done
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a $TMP/$PRGNAM-$VERSION/README.md $PKG/usr/doc/$PRGNAM-$VERSION/README.md
+cp -a $TMP/$PRGNAM-$VERSION/CHANGELOG.md $PKG/usr/doc/$PRGNAM-$VERSION/CHANGELOG.md
+cp -a $TMP/$PRGNAM-$VERSION/COMPILE.md $PKG/usr/doc/$PRGNAM-$VERSION/COMPILE.md
+cp -a $TMP/$PRGNAM-$VERSION/LICENSE $PKG/usr/doc/$PRGNAM-$VERSION/LICENSE
 
-# Compress info pages and remove the package's dir file
-# If no info pages are installed by the software, don't leave this in the script
-#rm -f $PKG/usr/info/dir
-#gzip -9 $PKG/usr/info/*.info*
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
-# Remove perllocal.pod and other special files that don't need to be installed,
-# as they will overwrite what's already on the system.  If this is not needed,
-# remove it from the script.
-# Remove 'special' files
-#find $PKG -name "perllocal.pod" \
-#  -o -name ".packlist" \
-#  -o -name "*.bs" \
-#  | xargs rm -f
-
-# Copy program documentation into the package
-# The included documentation varies from one application to another, so be sure
-# to adjust your script as needed
-# Also, include the SlackBuild script in the documentation directory
-#mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-#cp -a \
-#  <documentation> \
-#  $PKG/usr/doc/$PRGNAM-$VERSION
-# cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# Copy the slack-desc (and a custom doinst.sh if necessary) into ./install
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 [ -f $CWD/doinst.sh ] && cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-# Copy the .desktop file to it's proper place
 mkdir -p $PKG/usr/share/applications
 cp $TMP/$PRGNAM-$VERSION/REDasm.desktop $PKG/usr/share/applications
 
-# If package symlinks need to be created during install *before*
-# your custom contents of doinst.sh runs, then add the -p switch to
-# the makepkg command below -- see makepkg(8) for details
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}
 
-exit 0
+
 
