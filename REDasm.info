@@ -1,7 +1,7 @@
 PRGNAM="REDasm"
 VERSION="3.0.0.beta7"
 HOMEPAGE="https://redasm.io/"
-DOWNLOAD="https://github.com/kermitdafrog8/REDasm/archive/refs/tags/REDasm-v3.0.0.beta7.tar.gz"
+DOWNLOAD="https://github.com/kermitdafrog8/REDasm/archive/refs/tags/REDasm-3.0.0.beta7.tar.gz"
 MD5SUM="c7b5b71e9541c8771eb8a613f91a13c0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
