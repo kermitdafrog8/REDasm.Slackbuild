@@ -85,6 +85,12 @@ CXXFLAGS="$SLKCFLAGS" \
           mkdir build
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=/usr \
+          -DKDDockWidgets_DOCS=ON \
+          -DCAPSTONE_SPARC_SUPPORT=ON \
+          -DCAPSTONE_PPC_SUPPORT=ON \
+          -DCAPSTONE_X86_SUPPORT=ON \
+          -DCAPSTONE_MIPS_SUPPORT=ON \
+          -DCAPSTONE_M68K_SUPPORT=ON \
           -DCMAKE_BUILD_TYPE=Release ..
  
 
