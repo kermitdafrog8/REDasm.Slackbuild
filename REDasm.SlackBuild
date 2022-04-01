@@ -94,6 +94,7 @@ cd build
   make
   make install/strip DESTDIR=$PKG
 cd ..
+install -Dm644 REDasm.desktop $PKG/usr/share/applications/REDasm.desktop
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
@@ -106,9 +107,6 @@ cp -a \
   CHANGELOG* COMPILE* \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-mkdir -p $PKG/usr/share/applications
-cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
