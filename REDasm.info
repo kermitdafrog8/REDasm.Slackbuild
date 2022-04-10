@@ -3,8 +3,12 @@ VERSION="3.0.0.beta5"
 HOMEPAGE="https://redasm.io/"
 DOWNLOAD="Unsupported"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/kermitdafrog8/REDasm/releases/download/v3.0.0.beta5/REDasm-3.0.0.beta5.tar.gz"
-MD5SUM_x86_64="59b34f51bce714308f9cd150067183e4"
+DOWNLOAD_x86_64="https://github.com/kermitdafrog8/REDasm/releases/download/v3.0.0.beta5/REDasm-3.0.0.beta5.tar.gz \
+https://github.com/nlohmann/json/archive/refs/tags/v3.10.5.tar.gz \
+https://github.com/kermitdafrog8/KDDockWidgets/archive/refs/tags/v1.4.0.tar.gz"
+MD5SUM_x86_64="59b34f51bce714308f9cd150067183e4 \
+2fe65788d10ef1cb3919ffd50c9be5a0 \
+5b946f7d892fa55eabec45e76a20286b"
 REQUIRES=""
 MAINTAINER="Christopher Luck"
 EMAIL="kermitdafrog8@gmail.com"
